@@ -16,7 +16,7 @@ class Ship:
         # pygame processes every shape as a rectangle, so this is setting the ships's navigable area to the screen shape
         # it allows me to put the ship in the right spot on the screen
 
-        self.image = pygame.Surface((100,100))
+        self.image = pygame.image.load("images/ship.bmp")
 
         self.rect = pygame.Rect(self.image.get_rect())
         # get_rect transforms the space of the image into a rectangle shape that pygame uses as the border of the ship
