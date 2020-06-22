@@ -31,8 +31,19 @@ class Ship:
 
         self.rect.midbottom = self.screen_rect.midbottom
 
+
+        # Booleans for checking whether the ship is moving left or right.
+        self.moving_right = False
+        self.moving_left = False
+
+
     def blitme(self):
         # blit = draw the image into the screen at the spot specified by the self.rect
         self.screen.blit(self.image, self.rect)
+
+    def update(self):
+        # update ships position in response to arrow keys
+        if self.moving_right:
+            self.rect.x += 1
 
 
