@@ -17,6 +17,7 @@ class Ship:
         # it allows me to put the ship in the right spot on the screen
 
         self.image = pygame.image.load("images/ship.bmp")
+        self.sets = ai_game.settings
 
         #uncolored pixels will not be drawn on to background,
         # so that background of ship image matches the background color
@@ -31,6 +32,10 @@ class Ship:
 
         self.rect.midbottom = self.screen_rect.midbottom
 
+        #create variable for starting position of ship
+        self. x = float(self.rect.x)
+
+
 
         # Booleans for checking whether the ship is moving left or right.
         self.moving_right = False
@@ -44,8 +49,12 @@ class Ship:
     def update(self):
         # update ships position in response to arrow keys
         if self.moving_right:
-            self.rect.x += 1
+            self.x += self.sets.ship_speed
         if self.moving_left:
-            self.rect.x -= 1
+            self.x -= self.sets.ship_speed
+
+        #update rect position to adjusted position of self.x
+
+        self.rect.x = self.x
 
 
