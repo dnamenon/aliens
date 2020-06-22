@@ -2,7 +2,7 @@ from typing import Any, Union
 
 import pygame
 from pygame.surface import SurfaceType
-
+from settings import Settings
 
 class Ship:
 
@@ -17,6 +17,11 @@ class Ship:
         # it allows me to put the ship in the right spot on the screen
 
         self.image = pygame.image.load("images/ship.bmp")
+
+        #uncolored pixels will not be drawn on to background,
+        # so that background of ship image matches the background color
+        nocolor = self.image.get_at((0,0))
+        self.image.set_colorkey(nocolor)
 
         self.rect = pygame.Rect(self.image.get_rect())
         # get_rect transforms the space of the image into a rectangle shape that pygame uses as the border of the ship
