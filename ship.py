@@ -45,5 +45,7 @@ class Ship:
         # update ships position in response to arrow keys
         if self.moving_right:
             self.rect.x += 1
+        if self.moving_left:
+            self.rect.x -= 1
 
 
