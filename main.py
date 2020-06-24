@@ -35,21 +35,24 @@ class AlienInvasion:
 
     def run_game(self):
         """Start main game loop"""
+        num = 0
         while True:
+
             # watch for keyboard and mouse events
             self._check_events()
 
             #ship movement
             self.ship.update()
 
-            self.bullets.update()
+            #bullet handler
+            self._update_bullets()
+
+            self._update_aliens(num)
 
             # redraw screen during each pass through the loop.
             self._update_screen()
 
-
-            #bullet handler
-            self._update_bullets()
+            num +=1
 
 
 
@@ -108,15 +111,24 @@ class AlienInvasion:
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
+
+    def _update_aliens(self, num):
+        self.aliens.update(num)
+
+        for alien in self.aliens.copy():
+            if alien.rect.bottom >= self.settings.screen_height:
+                sys.exit()
+
     def _fire_bullet(self):
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
     def _update_bullets(self):
-        # get rid of old bullets
+
         self.bullets.update()
 
+        # get rid of old bullets
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)

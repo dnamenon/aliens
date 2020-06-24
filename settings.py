@@ -17,4 +17,4 @@ class Settings:
 
         #alien settings
 
-        self.alien_speed_y = 2.0
+        self.alien_speed_y = 1

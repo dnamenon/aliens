@@ -28,12 +28,35 @@ class Alien(Sprite):
         self.y = float(self.rect.y)
 
 
-    def _update(self):
-        self.y -= self.sets.alien_speed_y
-        self.x += random.uniform(-4,4)
+    def update(self, num):
+
+        if (num % 5 == 0):
+            self.update_y()
+        if (num % 100 == 0):
+            self.update_x()
+
+
+    def update_y(self):
+
+        self.y = float(self.rect.y)
+
+        self.y += self.sets.alien_speed_y
 
         self.rect.y = self.y
+
+
+    def update_x(self):
+        self.x = float(self.rect.x)
+        change = random.uniform(-50, 50)
+
+        if (self.x+change >= self.sets.screen_width or self.x+change <= 0):
+            change *= -1
+
+        self.x += change
+
+
         self.rect.x = self.x
+
 
 
 
