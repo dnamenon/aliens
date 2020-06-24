@@ -4,6 +4,7 @@ import pygame
 
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 
 class AlienInvasion:
@@ -24,6 +25,8 @@ class AlienInvasion:
 
         self.ship = Ship(self)
 
+        self.bullets = pygame.sprite.Group()
+
 
     def run_game(self):
         """Start main game loop"""
@@ -34,8 +37,15 @@ class AlienInvasion:
             #ship movement
             self.ship.update()
 
+            self.bullets.update()
+
             # redraw screen during each pass through the loop.
             self._update_screen()
+
+
+            #bullet handler
+            self._update_bullets()
+
 
 
     #helper methods, refactoring run_game
@@ -57,6 +67,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q: #quit game if q is pressed
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
 
     def _check_keyup_events(self, event):
@@ -64,6 +76,19 @@ class AlienInvasion:
             self.ship.moving_right = False
         if event.key == pygame.K_LEFT:
             self.ship.moving_left = False
+
+    def _fire_bullet(self):
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+        # get rid of old bullets
+        self.bullets.update()
+
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
 
 
@@ -73,8 +98,14 @@ class AlienInvasion:
 
         self.ship.blitme()
 
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+
         # make most recently drawn scene visible
         pygame.display.flip()
+
+
+
 
 
 if __name__ == '__main__':
